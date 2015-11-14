@@ -4,14 +4,16 @@ from methods import *
 
 all_roots = Roots()
 root_dict = {}
-
+my_dict = {}
 level_dict = {}
+
+trees = [[] for i in range(10)]
 
 for i in range(10):
     level_dict[i] = []
 
 def optimal_binary_search_tree(keys, freq, n):
-    global all_roots, level_dict
+    global all_roots, level_dict, my_dict, trees
     cost = [[0] * n for i in range(n)]
     for i in range(n):
         cost[i][i] = freq[i]
@@ -40,22 +42,42 @@ def optimal_binary_search_tree(keys, freq, n):
                     master_root.append(r1[1])
 
             # print('(', i + 1, '-', j+1, ')', master_root, end="   ")
+            # t1 = []
+            # if len(master_root) > 1:
+            #     t1.append(master_root[-1])
+            # else:
+            #     t1.append(master_root[0])
 
-            for rts in master_root[:1]:
+            counter = 0
+            my_dict[(i + 1, j + 1)] = []
+            for rts in master_root:
                 new_root = Root(rts)
                 new_root.range = (i + 1, j + 1)
                 new_root.calculate(i + 1, j + 1)
+                new_root.node_swap()
                 new_root.next_ranges.append([rts])
                 all_roots.add_root(new_root)
-
-
-
                 root_dict[new_root.range] = new_root
+
+                sub_dict1 = {counter: {}}
+                sub_dict1[counter] = {"root": rts, "left": new_root.left, "right": new_root.right}
+                my_dict[new_root.range].append(sub_dict1[counter])
+                counter += 1
+
+
 
     for g in all_roots.roots:
         print(g)
 
-    my_dict = build_level_dict(level_dict, root_dict[(1, 5)].next_ranges, 1, root_dict)
+    # for q in all_roots.roots:
+    #     if q.range == (1, 5):
+    # my_dict = build_level_dict(level_dict, root_dict[(1, 5)].next_ranges, 1, root_dict)
+    #         print(my_dict)
+    #         for i in range(10):
+    #             level_dict[i] = []
+
+    recurse(1, 5, trees, my_dict)
+
     return cost[0][n - 1]
 
 

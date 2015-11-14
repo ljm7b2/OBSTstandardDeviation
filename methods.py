@@ -38,8 +38,12 @@ class Root(object):
             self.add_left(start, self.root - 1)
             self.add_right(self.root + 1, end)
 
+    def node_swap(self):
+        if len(self.right) < len(self.left):
+            self.left, self.right = self.right, self.left
+
     def __str__(self):
-        return str(self.range) + "   " + str(self.left) + " " + str(self.root) + " " + str(self.right) + "  " + str(self.next_ranges)
+        return str(self.range) + "   " + str(self.left) + " " + str(self.root) + " " + str(self.right)# + "  " + str(self.next_ranges)
 
 
 class Roots(object):
@@ -67,7 +71,6 @@ def build_level_dict(level_dict, next_ranges, level, next_ranges_dict):
             level_dict[level].append(s[0])
             break
 
-
         elif len(i) == 1:
             level += 1
             level_dict[level].append(i[0])
@@ -78,5 +81,66 @@ def build_level_dict(level_dict, next_ranges, level, next_ranges_dict):
             build_level_dict(level_dict, next_ranges_dict[(t, j)].next_ranges, level, next_ranges_dict)
 
     return level_dict
+
+
+class Tree_Node(object):
+    def __init__(self):
+        self.root = 0
+        self.left = 0
+        self.right = 0
+
+level = 0
+def recurse(i, j, trees, my_dict):
+    global level
+    iter1 = ["root", "left", "right"]
+
+    for index, key in enumerate(my_dict[(i, j)]):
+        index = 0
+        # level = 1
+        level += 1
+        for loc in iter1:
+
+            if loc == "root":
+
+                trees[index].append((level, key[loc]))
+
+            elif loc == "left":
+
+                if len(key[loc]) == 0:
+                    continue
+
+                elif len(key[loc]) == 1:
+                    t1 = key[loc][0]
+                    level += 1
+                    trees[index].append((level, key[loc][0]))
+                    level -= 1
+
+                else:
+
+                    trees[index].append((level, recurse(key[loc][0], key[loc][-1], trees, my_dict)))
+
+            else:
+
+                if len(key[loc]) == 0:
+                    continue
+
+                elif len(key[loc]) == 1:
+                    t2 = key[loc][0]
+                    level += 1
+                    trees[index].append((level, key[loc][0]))
+                    level -= 1
+
+                else:
+
+                    trees[index].append((level, recurse(key[loc][0], key[loc][-1], trees, my_dict)))
+
+    level = 0
+
+
+
+
+
+
+
 
 
