@@ -88,12 +88,16 @@ class Tree_Node(object):
         self.root = 0
         self.left = 0
         self.right = 0
-
+stack = []
 level = 0
-def recurse(i, j, trees, my_dict):
-    global level
-    iter1 = ["root", "left", "right"]
+prev_level = []
+big_tree = []
 
+
+def recurse(i, j, trees, my_dict, stack):
+    global level, prev_level, big_tree
+    iter1 = ["root", "left", "right"]
+    trigger = 0
     for index, key in enumerate(my_dict[(i, j)]):
         index = 0
         # level = 1
@@ -115,9 +119,12 @@ def recurse(i, j, trees, my_dict):
                     trees[index].append((level, key[loc][0]))
                     level -= 1
 
-                else:
 
-                    trees[index].append((level, recurse(key[loc][0], key[loc][-1], trees, my_dict)))
+                else:
+                    recurse(key[loc][0], key[loc][-1], trees, my_dict, stack)
+                    trees[index].append("break")
+                    #big_tree.append(trees)
+                    #trees = [[]]
 
             else:
 
@@ -130,14 +137,26 @@ def recurse(i, j, trees, my_dict):
                     trees[index].append((level, key[loc][0]))
                     level -= 1
 
-                else:
 
-                    trees[index].append((level, recurse(key[loc][0], key[loc][-1], trees, my_dict)))
+                else:
+                    recurse(key[loc][0], key[loc][-1], trees, my_dict, stack)
+                    trees[index].append("break")
+                    print(i, j)
+                    trees=[[]]
+
+    big_tree.append(trees)
+    trees = [[]]
+
+                    #if len(my_dict[(i, j)]) > 1:
+                       #level = 1
+
+            # prev_level.append(level)
 
     level = 0
 
 
-
+def recurse2(i, j, trees, my_dict):
+    pass
 
 
 

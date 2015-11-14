@@ -7,7 +7,7 @@ root_dict = {}
 my_dict = {}
 level_dict = {}
 
-trees = [[] for i in range(10)]
+trees = [[]]
 
 for i in range(10):
     level_dict[i] = []
@@ -60,7 +60,10 @@ def optimal_binary_search_tree(keys, freq, n):
                 root_dict[new_root.range] = new_root
 
                 sub_dict1 = {counter: {}}
-                sub_dict1[counter] = {"root": rts, "left": new_root.left, "right": new_root.right}
+                if (i + 1, j + 1) == (1, len(freq)):
+                    sub_dict1[counter] = {"root": rts, "left": new_root.left, "right": new_root.right, "top": False}
+                else:
+                    sub_dict1[counter] = {"root": rts, "left": new_root.left, "right": new_root.right, "top": True}
                 my_dict[new_root.range].append(sub_dict1[counter])
                 counter += 1
 
@@ -75,8 +78,8 @@ def optimal_binary_search_tree(keys, freq, n):
     #         print(my_dict)
     #         for i in range(10):
     #             level_dict[i] = []
-
-    recurse(1, 5, trees, my_dict)
+    stack1 = []
+    recurse(1, 5, trees, my_dict, stack1)
 
     return cost[0][n - 1]
 
