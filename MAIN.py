@@ -3,11 +3,15 @@ import struct
 from methods import *
 
 all_roots = Roots()
-root_list = []
+root_dict = {}
 
+level_dict = {}
+
+for i in range(10):
+    level_dict[i] = []
 
 def optimal_binary_search_tree(keys, freq, n):
-    global all_roots
+    global all_roots, level_dict
     cost = [[0] * n for i in range(n)]
     for i in range(n):
         cost[i][i] = freq[i]
@@ -37,14 +41,21 @@ def optimal_binary_search_tree(keys, freq, n):
 
             # print('(', i + 1, '-', j+1, ')', master_root, end="   ")
 
-            for rts in master_root:
+            for rts in master_root[:1]:
                 new_root = Root(rts)
-                new_root.range.extend([i + 1, j + 1])
+                new_root.range = (i + 1, j + 1)
                 new_root.calculate(i + 1, j + 1)
+                new_root.next_ranges.append([rts])
                 all_roots.add_root(new_root)
+
+
+
+                root_dict[new_root.range] = new_root
 
     for g in all_roots.roots:
         print(g)
+
+    my_dict = build_level_dict(level_dict, root_dict[(1, 5)].next_ranges, 1, root_dict)
     return cost[0][n - 1]
 
 
