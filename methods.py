@@ -182,4 +182,15 @@ def recurse2(i, j, trees, my_dict, level):
     level = 0
 
 
+class OBST(object):
+    def __init__(self):
+        self.key = -1
+        self.left = -1
+        self.right = -1
+
+
+
+
+
+
 

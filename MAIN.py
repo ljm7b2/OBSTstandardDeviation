@@ -103,16 +103,51 @@ def optimal_binary_search_tree(keys, freq, n):
         t5.append(deepcopy(root))
 
 
-    for index, val in enumerate(m1):
+
+
+
+
+    for index, val in enumerate(m1):   # build all grid combinations in a list
         counter = 0
         for s5 in val:
             t5[index][ij_list[counter][0]][ij_list[counter][-1]] = s5
             counter += 1
 
+    ss1 = []
+    root_dict = {}
+    all_roots = Roots()
+    super_list_1 = []
+    for root2 in t5:
+        #my_dict = {}
+        for L in range(2, n + 1):
+            for i in range(0, n - L + 1):
+                j = i + L - 1
+                my_dict[(i + 1, j + 1)] = []
+                new_root = Root(root2[i][j])
+                new_root.range = (i + 1, j + 1)
+                new_root.calculate(i + 1, j + 1)
+                new_root.node_swap()
+                new_root.next_ranges.append([root2[i][j]])
+                all_roots.add_root(new_root)
+                root_dict[new_root.range] = new_root
 
 
-    for g in all_roots.roots:
-        print(g)
+                sub_dict1 = {counter: {}}
+                if (i + 1, j + 1) == (1, len(freq)):
+                    sub_dict1[counter] = {"root": root2[i][j], "left": new_root.left, "right": new_root.right, "top": False, "range": (i + 1, j + 1)}
+                else:
+                    sub_dict1[counter] = {"root": root2[i][j], "left": new_root.left, "right": new_root.right, "top": True, "range": (i + 1, j + 1)}
+                my_dict[(i + 1, j + 1)].append(sub_dict1[counter])
+                counter += 1
+
+            print(root_dict)
+
+        recurse2(1, 5, trees, my_dict, 1)
+        super_list_1.append(trees)
+        trees=[[]]
+
+    # for g in all_roots.roots:
+    #     print(g)
 
     # for q in all_roots.roots:
     #     if q.range == (1, 5):
@@ -126,7 +161,7 @@ def optimal_binary_search_tree(keys, freq, n):
 
     # for t in my_dict[(1, 5)]:
 
-    # recurse2(1, 5, trees, my_dict, 1)
+
 
     return cost[0][n - 1]
 
