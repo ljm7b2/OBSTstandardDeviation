@@ -9,14 +9,14 @@ class Root(object):
 
     def add_left(self, l=-1, r=-1):
         if l == -1 or l == r:
-            self.left.append(r)
+            self.left.extend([r, r])
         else:
             self.left.extend([l, r])
         self.next_ranges.append(self.left)
 
     def add_right(self, l=-1, r=-1):
         if l == -1 or l == r:
-            self.right.append(r)
+            self.right.extend([r,r])
         else:
             self.right.extend([l, r])
         self.next_ranges.append(self.right)
@@ -155,11 +155,31 @@ def recurse(i, j, trees, my_dict, stack):
     level = 0
 
 
-def recurse2(i, j, trees, my_dict):
-    pass
+trees = [[] for i in range(5)]
+count = 0
+def recurse2(i, j, trees, my_dict, level):
+    global count
+    for key in my_dict[(i, j)]:
+
+
+        trees[0].append((key["root"], "L: " + str(level)))
+        level += 1
+
+
+        if len(key["left"]) != 0:
+            recurse2(key["left"][0], key["left"][-1], trees, my_dict, level)
 
 
 
+        if len(key["right"]) != 0:
+            recurse2(key["right"][0], key["right"][-1], trees, my_dict, level)
+
+
+            trees[0].append("break2")
+
+
+        level = 1
+    level = 0
 
 
 
