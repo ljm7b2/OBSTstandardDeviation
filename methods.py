@@ -122,7 +122,7 @@ def recurse(i, j, trees, my_dict, stack):
 
                 else:
                     recurse(key[loc][0], key[loc][-1], trees, my_dict, stack)
-                    trees[index].append("break")
+                    #trees[index].append("break")
                     #big_tree.append(trees)
                     #trees = [[]]
 
@@ -140,8 +140,8 @@ def recurse(i, j, trees, my_dict, stack):
 
                 else:
                     recurse(key[loc][0], key[loc][-1], trees, my_dict, stack)
-                    trees[index].append("break")
-                    print(i, j)
+                    #trees[index].append("break")
+                   # print(i, j)
                     trees=[[]]
 
     big_tree.append(trees)

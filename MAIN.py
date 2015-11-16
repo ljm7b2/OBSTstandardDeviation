@@ -2,6 +2,11 @@ __author__ = 'ljm7b'
 import itertools
 from copy import deepcopy
 from methods import *
+import random
+
+import cProfile
+import re
+cProfile.run('re.compile("main()")')
 
 all_roots = Roots()
 root_dict = {}
@@ -29,7 +34,7 @@ def optimal_binary_search_tree(keys, freq, n):
         sub_dict1[counter] = {"root": i + 1, "left": [], "right": [], "range": (i + 1, i + 1)}
         my_dict[(i + 1, i + 1)] = []
         my_dict[(i+1, i+1)].append(sub_dict1[counter])
-
+    print("here3")
     for L in range(2, n + 1):
         for i in range(0, n - L + 1):
             j = i + L - 1
@@ -45,7 +50,7 @@ def optimal_binary_search_tree(keys, freq, n):
                     root[i][j] = r + 1
                     print(cost[i][j], i+1, j+1)
 
-                #print('(', r + 1, ')', c, ' ', end=" ")
+                print('(', r + 1, ')', c, ' ', end=" ")
 
                 roots.append((c, r + 1, (i, j)))
             roots.sort()
@@ -65,47 +70,12 @@ def optimal_binary_search_tree(keys, freq, n):
                 ij_list.append([i, j])
 
             print('(', i + 1, '-', j+1, ')', master_root, end="   ")
-
-
-
-
-
-            # t1 = []
-            # if len(master_root) > 1:
-            #     t1.append(master_root[-1])
-            # else:
-            #     t1.append(master_root[0])
-
-            # counter = 0
-            # my_dict[(i + 1, j + 1)] = []
-            # for rts in master_root:
-            #     new_root = Root(rts)
-            #     new_root.range = (i + 1, j + 1)
-            #     new_root.calculate(i + 1, j + 1)
-            #     new_root.node_swap()
-            #     new_root.next_ranges.append([rts])
-            #     all_roots.add_root(new_root)
-            #     root_dict[new_root.range] = new_root
-            #
-            #     sub_dict1 = {counter: {}}
-            #     if (i + 1, j + 1) == (1, len(freq)):
-            #         sub_dict1[counter] = {"root": rts, "left": new_root.left, "right": new_root.right, "top": False, "range": (i + 1, j + 1)}
-            #     else:
-            #         sub_dict1[counter] = {"root": rts, "left": new_root.left, "right": new_root.right, "top": True, "range": (i + 1, j + 1)}
-            #     my_dict[new_root.range].append(sub_dict1[counter])
-            #     counter += 1
-
-    # ij_list
+    print("here4")
     m1 = list(itertools.product(*all_roots_list))
 
     t5 =[]
     for i in range(len(m1)):
         t5.append(deepcopy(root))
-
-
-
-
-
 
     for index, val in enumerate(m1):   # build all grid combinations in a list
         counter = 0
@@ -117,6 +87,7 @@ def optimal_binary_search_tree(keys, freq, n):
     root_dict = {}
     all_roots = Roots()
     super_list_1 = []
+    print("here5")
     for root2 in t5:
         #my_dict = {}
         for L in range(2, n + 1):
@@ -140,28 +111,11 @@ def optimal_binary_search_tree(keys, freq, n):
                 my_dict[(i + 1, j + 1)].append(sub_dict1[counter])
                 counter += 1
 
-            print(root_dict)
+            #print(root_dict)
 
-        recurse2(1, 5, trees, my_dict, 1)
+        recurse2(1, n, trees, my_dict, 1)
         super_list_1.append(trees)
-        trees=[[]]
-
-    # for g in all_roots.roots:
-    #     print(g)
-
-    # for q in all_roots.roots:
-    #     if q.range == (1, 5):
-    # my_dict = build_level_dict(level_dict, root_dict[(1, 5)].next_ranges, 1, root_dict)
-    #         print(my_dict)
-    #         for i in range(10):
-    #             level_dict[i] = []
-    stack1 = []
-    # recurse(1, 5, trees, my_dict, stack1)
-    #for key in my_dict[(1, 5)]:
-
-    # for t in my_dict[(1, 5)]:
-
-
+        trees = [[]]
 
     return cost[0][n - 1]
 
@@ -176,4 +130,14 @@ def my_sum(freq, i, j):
 keys = [10, 12, 20, 0, 0]
 freq = [6, 4, 2, 6, 4]
 
-print(optimal_binary_search_tree(keys, freq, len(freq)))
+
+freq_test = []
+def main():
+    # for i in range(50):
+    #     freq_test.append(random.randint(0, 25))
+    freq_test = [5, 5, 5, 15, 10, 10, 10]
+    optimal_binary_search_tree(keys, freq_test, len(freq_test))
+
+
+
+main()
