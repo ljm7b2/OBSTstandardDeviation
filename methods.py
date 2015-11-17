@@ -16,7 +16,7 @@ class Root(object):
 
     def add_right(self, l=-1, r=-1):
         if l == -1 or l == r:
-            self.right.extend([r,r])
+            self.right.extend([r, r])
         else:
             self.right.extend([l, r])
         self.next_ranges.append(self.right)
