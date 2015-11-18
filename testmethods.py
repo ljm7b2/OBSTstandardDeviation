@@ -7,8 +7,8 @@ from data import *
 
 
 #vals = [random.randint(2000,3000) for i in range(2000)]
-vals = data()
-#vals = [3,3,2,1]
+#vals = data()
+vals = [3,3,2,1]
 n = len(vals)
 print("length", n)
 S = [[0]*n for i in range(n)]

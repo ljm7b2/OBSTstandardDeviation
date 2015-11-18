@@ -11,7 +11,7 @@ def build_dict(i, j, roots):
 
 def calculate_node(i, j, roots):
     temp_dict = []
-    for index, root in enumerate(roots):
+    for root in roots:
         if root == i and root == j:
             temp_dict.append({"root": root, "left": -1, "right": -1})
         elif root == i:
@@ -23,11 +23,11 @@ def calculate_node(i, j, roots):
     return temp_dict
 
 
-def my_sum(freq, i, j):
-    s = 0
-    for k in range(i, j + 1):
-        s += freq[k]
-    return s
+# def my_sum(freq, i, j):
+#     s = 0
+#     for k in range(i, j + 1):
+#         s += freq[k]
+#     return s
 
 
 
@@ -69,15 +69,19 @@ def compute_w_c_r(p, n_max, C, W, R, S, node_dict):
     for i in range(n_max):
         C[i][i] = W[i][i]
         R[i][i] = i + 1
+        S[i][i] = p[i]
         node_dict[(i+1, i+1)] = [{"root": i+1, "left": -1, "right": -1}]
+    for i in range(1, n_max):
+        for s in range(i-1, -1, -1):
+            S[s][i] = S[s][i-1] + S[s+1][i] - S[s+1][i-1]
     for L in range(2, n_max + 1):
         progress(L)
         for i in range(0, n_max - L + 1):
             j = i + L - 1
             C[i][j] = 1000000000
             roots = []
-            for r in range(i, j + 1):                                            # this is slow makes algorithm n^4
-                c = (C[i][r - 1] if r > i else 0) + (C[r + 1][j] if r < j else 0) + (my_sum(p, i, j))
+            for r in range(i, j + 1):
+                c = (C[i][r - 1] if r > i else 0) + (C[r + 1][j] if r < j else 0) + S[i][j]
                 if c < C[i][j]:
                     C[i][j] = c
                     R[i][j] = r + 1

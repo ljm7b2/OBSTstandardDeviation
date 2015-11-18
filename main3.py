@@ -1,4 +1,5 @@
 from helpers import *
+from data_file import *
 import time
 import random
 from timeit import default_timer as timer
@@ -6,14 +7,14 @@ start = timer()
 # define Global Variables
 
 # p = [26, 20, 26, 19, 26, 21, 23, 25, 28, 17, 26, 26, 29, 21, 23]
-p = [6, 4, 2, 6, 4]
+#p = [6, 4, 2, 6, 4]
 #p = [16, 18, 16, 16, 22, 20, 14, 19, 14, 23, 17, 23, 15, 17]
 # p = [19, 19, 20, 21, 22, 18, 21, 18, 19, 18, 22, 18, 18]
-#p = [4 for i in range(250)]
+#p = [4 for i in range(400)]
 # p = [10, 3, 9, 2, 0, 10]
 #p = [3, 3, 4, 4]
 # p = [3, 2, 4, 1]
-
+p = data()
 
 
 
@@ -41,7 +42,7 @@ all_trees = organize_trees(all_trees, trees, [], -1, n_max)
 
 print(all_trees)
 print(len(all_trees))
-print(get_std_deviation(all_trees, total_sum, n_max))
+print(get_std_deviation(all_trees, total_sum, n_max)) # i dont think std is right, make sure it pulling probabiliities and node #
 
 print(W)
 print(C)
