@@ -1,4 +1,5 @@
 from helpers import *
+from obst_algorithms import *
 from data_file import *
 import time
 import random
@@ -17,6 +18,7 @@ p = [6, 4, 2, 6, 4]
 # p = [3, 2, 4, 1]
 # p = data()
 
+t = read_file("test.txt")
 
 
 
@@ -32,12 +34,13 @@ node_dict, count, trees, recheck, ct = {}, 0, [], [1], 0
 all_trees = []
 # main
 
-print("Computing tables")
+print("Computing Optimal Binary Search Tree.....Please Wait")
+print("\t---------")
 compute_w_c_r(p, n_max, C, W, R, S, D, node_dict)
-
+print("\t---------")
 
 while len(trees) < 3:
-    build_trees(1, n_max, trees, node_dict, 1, n_max, recheck)
+    build_trees(1, n_max, trees, node_dict, 1, n_max)
     ct += 1
 
 #if trees[0] == trees[-1]:
