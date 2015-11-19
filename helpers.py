@@ -56,6 +56,7 @@ def get_std_deviation(all_trees, total_sum, n_max, probabilities):
                 sum_list.append((temp_sum1, temp_sum2))
                 temp_sum1, temp_sum2, counter = 0, 0, 0
             counter += 1
+    print("Average time complexity: ", sum_list[0][0])
     return [sqrt(val[-1] - (val[0] ** 2)) for val in sum_list]
 
 
@@ -82,7 +83,7 @@ def compute_w_c_r(p, n_max, C, W, R, S, D, node_dict):
             j = i + L - 1
             C[i][j] = 1000000000
             roots = []
-            for r in range(i, j + 1):
+            for r in range(R[i][j-1]-1, R[i+1][j]+1):
                 c = (C[i][r - 1] if r > i else 0) + (C[r + 1][j] if r < j else 0) + S[i][j]
                 if c < C[i][j]:
                     C[i][j] = c
