@@ -34,6 +34,8 @@ def organize_trees(all_trees, trees, temp, count, n_max):
 
 
 def progress(n, n_max):
+    if n == 2:
+        print_progress_header()
 
     div = int(n_max/10)
     if n == div:
@@ -56,16 +58,19 @@ def progress(n, n_max):
         print("\t|..90%..|")
 
 
-def print_tree(tree, p):
-    l1, l2, l3, = [], [], []
-    for level in tree:
-        index = level[-1] - 1
-        if level[0] == 1:
-            l1.append(p[index])
-        elif level[0] == 2:
-            l2.append(p[index])
-        elif level[0] == 3:
-            l3.append(p[index])
+def print_tree(trees, p):
+
+    for index, tree in enumerate(trees):
+        print("-"*13, "Tree:", index + 1, "-"*15)
+        l1, l2, l3, = [], [], []
+        for level in tree:
+            index = level[-1] - 1
+            if level[0] == 1:
+                l1.append(p[index])
+            elif level[0] == 2:
+                l2.append(p[index])
+            elif level[0] == 3:
+                l3.append(p[index])
 
     print("{:>20}".format(l1[0]))
     for val in l2:
@@ -73,15 +78,20 @@ def print_tree(tree, p):
     print()
     for val in l3:
         print("{:>6}".format(val), end="   ")
-
+    print("\n", "-"*36)
 
 def print_table_info(f_name, n_max, avg1, std_dev1, wrst_case1):
     args = [f_name, n_max, avg1[0], std_dev1,  wrst_case1]
-    headers = ["File", "N Size", "AVG", "ST_D", "WRST 1"]
+    headers = ["File Name", "N Size", "O(AVG)", "ST_D", "O(WRST)"]
+    print()
+    print("-"*78)
+    print("{:<30s} {:<12s} {:<11s} {:<14s} {:<11s}".format(*headers))
+    print("-"*78)
+    print("{:<30s} {:<12d} {:<11.3f} {:<14.3f} {:<12d}".format(*args))
+    print("-"*78)
+    print()
 
-    print("{:10s}{:10s}{:10s}{:10s}{:10s}".format(*headers))
-    print("-"*77)
-    print("{:10s}{:10d}{:10.3f}{:10.3f}{:10d}".format(*args))
 
-
-    pass
+def print_progress_header():
+    print("Computing Optimal Binary Search Tree.....Please Wait")
+    print("\t---------")
