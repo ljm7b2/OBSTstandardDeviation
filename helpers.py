@@ -45,12 +45,13 @@ def build_trees(i, j, trees, my_dict, level, size, recheck):
                 recheck[0] += 1
 
 
-def get_std_deviation(all_trees, total_sum, n_max):
+def get_std_deviation(all_trees, total_sum, n_max, probabilities):
     temp_sum1, temp_sum2, sum_list, counter = 0, 0, [], 1
     for t in all_trees:
         for node in t:
-            temp_sum1 += node[0] * (node[-1] / total_sum)
-            temp_sum2 += (node[0] ** 2) * (node[-1] / total_sum)
+            depth, index = node
+            temp_sum1 += depth * (probabilities[index-1] / total_sum)
+            temp_sum2 += (depth ** 2) * (probabilities[index-1] / total_sum)
             if counter == n_max:
                 sum_list.append((temp_sum1, temp_sum2))
                 temp_sum1, temp_sum2, counter = 0, 0, 0
@@ -58,7 +59,7 @@ def get_std_deviation(all_trees, total_sum, n_max):
     return [sqrt(val[-1] - (val[0] ** 2)) for val in sum_list]
 
 
-def compute_w_c_r(p, n_max, C, W, R, S, node_dict):
+def compute_w_c_r(p, n_max, C, W, R, S, D, node_dict):
 
     # construct weight matrix
     for i in range(n_max):
@@ -70,6 +71,7 @@ def compute_w_c_r(p, n_max, C, W, R, S, node_dict):
         C[i][i] = W[i][i]
         R[i][i] = i + 1
         S[i][i] = p[i]
+        D[i][i] = 1
         node_dict[(i+1, i+1)] = [{"root": i+1, "left": -1, "right": -1}]
     for i in range(1, n_max):
         for s in range(i-1, -1, -1):
@@ -122,3 +124,22 @@ def progress(n):
         print("90%")
 
 
+def print_tree(tree, p):
+    count = 0
+
+    l1, l2, l3, = [],[],[]
+    for level in tree:
+        index = level[-1] - 1
+        if level[0] == 1:
+            l1.append(p[index])
+        elif level[0] == 2:
+            l2.append(p[index])
+        elif level[0] == 3:
+            l3.append(p[index])
+
+    print("{:>20}".format(l1[0]))
+    for val in l2:
+        print("{:>13}".format(val), end="")
+    print()
+    for val in l3:
+        print("{:>6}".format(val), end="   ")
