@@ -75,3 +75,13 @@ def print_tree(tree, p):
         print("{:>6}".format(val), end="   ")
 
 
+def print_table_info(f_name, n_max, avg1, std_dev1, wrst_case1):
+    args = [f_name, n_max, avg1[0], std_dev1,  wrst_case1]
+    headers = ["File", "N Size", "AVG", "ST_D", "WRST 1"]
+
+    print("{:10s}{:10s}{:10s}{:10s}{:10s}".format(*headers))
+    print("-"*77)
+    print("{:10s}{:10d}{:10.3f}{:10.3f}{:10d}".format(*args))
+
+
+    pass

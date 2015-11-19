@@ -83,7 +83,7 @@ def get_std_deviation(all_trees, total_sum, n_max, probabilities):
                 temp_sum1, temp_sum2, counter = 0, 0, 0
             counter += 1
     print("Average time complexity: ", sum_list[0][0])
-    return [sqrt(val[-1] - (val[0] ** 2)) for val in sum_list]
+    return sum_list, [sqrt(val[-1] - (val[0] ** 2)) for val in sum_list]
 
 
 

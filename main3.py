@@ -7,6 +7,8 @@ from timeit import default_timer as timer
 start = timer()
 # define Global Variables
 
+file_name = "file.txt"
+
 # p = [26, 20, 26, 19, 26, 21, 23, 25, 28, 17, 26, 26, 29, 21, 23]
 p = [6, 4, 2, 6, 4]
 #p = [16, 18, 16, 16, 22, 20, 14, 19, 14, 23, 17, 23, 15, 17]
@@ -19,6 +21,7 @@ p = [6, 4, 2, 6, 4]
 # p = data()
 
 t = read_file("test.txt")
+
 
 
 
@@ -58,25 +61,16 @@ for tr in all_trees:
 
 print()
 print(len(all_trees))
-print(get_std_deviation(all_trees, total_sum, n_max, p)) # i dont think std is right, make sure it pulling probabiliities and not node #
+
+avgs, std_devs = get_std_deviation(all_trees, total_sum, n_max, p)
 
 #print(W)
 #print(C)
 #print(R)
 print()
 
-
-
-# for i in range(1, n_max + 1):
-#     for t in range(i, n_max+ 1):
-#         if len(node_dict[(i,t)]) > 1:
-#             print("(", end="")
-#             for s in node_dict[(i, t)]:
-#                 print("{0:2d}".format(s["root"]), end=" ")
-#             print(")", end="")
-#         print("{0:2d}".format(node_dict[(i, t)][0]["root"]), end=" ")
-#     print()
-
 end = timer()
 print("Time elapsed:", end - start, "seconds")
 print("Time elapsed:", (end - start)/ 60, "minutes")
+
+print_table_info(file_name,n_max,avgs[0],std_devs[0],all_trees[0][-1][0])
