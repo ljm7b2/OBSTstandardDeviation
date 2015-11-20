@@ -14,7 +14,6 @@ def compute_w_c_r(p, n_max, C, W, R, S, D, node_dict):
         C[i][i] = W[i][i]
         R[i][i] = i + 1
         S[i][i] = p[i]
-        D[i][i] = 1
         node_dict[(i+1, i+1)] = [{"root": i+1, "left": -1, "right": -1}]
     for i in range(1, n_max):
         for s in range(i-1, -1, -1):
@@ -38,7 +37,7 @@ def compute_w_c_r(p, n_max, C, W, R, S, D, node_dict):
 
 def build_trees(i, j, trees, my_dict, level, size):
     for key in my_dict[(i, j)]:
-        trees.append([level, key["root"]])
+        trees.append((level, key["root"]))
         level += 1
         if key["left"] != -1:
             build_trees(key["left"][0], key["left"][-1], trees, my_dict, level, size)

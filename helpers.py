@@ -1,5 +1,6 @@
 from csv import reader
-
+from itertools import chain
+from copy import deepcopy
 
 # read and scrub data from file
 # can handle multiple sets of data
@@ -23,14 +24,21 @@ def read_file(filename):
         return master_list
 
 
-def organize_trees(all_trees, trees, temp, count, n_max):
+def organize_trees(trees, n_max):
+    temp_tree, s1 = [], set()
+
+    count1 = -1
     for tr in trees:
-        count += 1
-        temp.append(tr)
-        if count == n_max - 1:
-            all_trees.append(sorted(temp))
-            temp, count = [], -1
-    return all_trees
+        count1 += 1
+        temp_tree.append(tr)
+        if count1 == n_max - 1:
+            s1.add(tuple(sorted(temp_tree)))
+            temp_tree = []
+            count1 = -1
+
+    trees = [list(tr) for tr in s1]
+
+    return trees
 
 
 def progress(n, n_max):
@@ -56,39 +64,35 @@ def progress(n, n_max):
         print("\t|..80%..|")
     elif n == div * 9:
         print("\t|..90%..|")
+    elif n == div * 10:
+        print("\t|..100%.|")
 
 
-def print_tree(trees, p):
+def print_tree(trees, p, ct):
+    print("Tree:", ct + 1, "-"*71)
+    l1 = [(p[index], level[0], level[-1]) for index, level in enumerate(trees) if level[0] in [1, 2, 3]]
+    for index, val in enumerate(l1):
+        if index < 3:
+            print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
+        elif index == 3:
+            print("\n -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
+        elif index < 6:
+            print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
+        else:
+            print("\n -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
 
-    for index, tree in enumerate(trees):
-        print("-"*13, "Tree:", index + 1, "-"*15)
-        l1, l2, l3, = [], [], []
-        for level in tree:
-            index = level[-1] - 1
-            if level[0] == 1:
-                l1.append(p[index])
-            elif level[0] == 2:
-                l2.append(p[index])
-            elif level[0] == 3:
-                l3.append(p[index])
 
-    print("{:>20}".format(l1[0]))
-    for val in l2:
-        print("{:>13}".format(val), end="")
-    print()
-    for val in l3:
-        print("{:>6}".format(val), end="   ")
-    print("\n", "-"*36)
+    print("\n")
 
-def print_table_info(f_name, n_max, avg1, std_dev1, wrst_case1):
+def print_table_info(f_name, n_max, avg1, std_dev1, wrst_case1, ct2):
+    print("Tree:", ct2, "Information")
     args = [f_name, n_max, avg1[0], std_dev1,  wrst_case1]
-    headers = ["File Name", "N Size", "O(AVG)", "ST_D", "O(WRST)"]
-    print()
-    print("-"*78)
+    headers = ["FILE NAME", "N SIZE", "O(AVG)", "STD_DEV", "O(WORST)"]
+    print("-"*79)
     print("{:<30s} {:<12s} {:<11s} {:<14s} {:<11s}".format(*headers))
-    print("-"*78)
-    print("{:<30s} {:<12d} {:<11.3f} {:<14.3f} {:<12d}".format(*args))
-    print("-"*78)
+    print("-"*79)
+    print("{:<30s} {:<12d} {:<11.3f} {:<14.10f} {:<12d}".format(*args))
+    print("-"*79)
     print()
 
 
