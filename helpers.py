@@ -1,6 +1,4 @@
 from csv import reader
-from itertools import chain
-from copy import deepcopy
 
 # read and scrub data from file
 # can handle multiple sets of data
@@ -72,27 +70,27 @@ def print_tree(trees, p, ct):
     print("Tree:", ct + 1, "-"*71)
     l1 = [(p[index], level[0], level[-1]) for index, level in enumerate(trees) if level[0] in [1, 2, 3]]
     for index, val in enumerate(l1):
-        if index < 3:
+        if index < 1:
             print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
-        elif index == 3:
+        elif index == 1:
             print("\n -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
-        elif index < 6:
-            print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
+        elif index < 3:
+            print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")\n"), end="")
         else:
-            print("\n -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
+            print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
 
 
     print("\n")
 
 def print_table_info(f_name, n_max, avg1, std_dev1, wrst_case1, ct2):
-    print("Tree:", ct2, "Information")
-    args = [f_name, n_max, avg1[0], std_dev1,  wrst_case1]
-    headers = ["FILE NAME", "N SIZE", "O(AVG)", "STD_DEV", "O(WORST)"]
-    print("-"*79)
-    print("{:<30s} {:<12s} {:<11s} {:<14s} {:<11s}".format(*headers))
-    print("-"*79)
-    print("{:<30s} {:<12d} {:<11.3f} {:<14.10f} {:<12d}".format(*args))
-    print("-"*79)
+    print("Tree:", ct2)
+    args = [f_name, n_max, avg1[0], std_dev1,  wrst_case1, 1]
+    headers = ["FILE NAME", "N SIZE", "O(AVG)", "STD_DEV", "O(WORST)", "O(BEST)"]
+    print("-"*88)
+    print("{:<30s} {:<12s} {:<11s} {:<14s} {:<9s} {:<8s}".format(*headers))
+    print("-"*88)
+    print("{:<30s} {:<12d} {:<11.3f} {:<14.10f} {:<9d} {:<8d}".format(*args))
+    print("-"*88)
     print()
 
 

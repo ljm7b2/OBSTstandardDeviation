@@ -3,7 +3,7 @@ import os
 import tracemalloc
 
 
-def display_top(snapshot, group_by='lineno', limit=5):
+def display_top(snapshot, group_by='lineno', limit=10):
     snapshot = snapshot.filter_traces((
         tracemalloc.Filter(False, "<frozen importlib._bootstrap>"),
         tracemalloc.Filter(False, "<unknown>"),
