@@ -1,6 +1,7 @@
 import linecache
 import os
 import tracemalloc
+import pstats
 
 
 def display_top(snapshot, group_by='lineno', limit=10):
@@ -27,4 +28,3 @@ def display_top(snapshot, group_by='lineno', limit=10):
         print("%s other: %.1f KiB" % (len(other), size / 1024))
     total = sum(stat.size for stat in top_stats)
     print("Total allocated size: %.1f KiB" % (total / 1024))
-

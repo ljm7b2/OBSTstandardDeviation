@@ -2,7 +2,7 @@ from helpers import *
 from math import sqrt
 
 
-def compute_w_c_r(p, n_max, C, W, R, S, D, node_dict, second_best_dict):
+def compute_w_c_r(p, n_max, C, W, R, S, D, node_dict, second_best_dict, comparisons):
 
     # construct weight matrix
     for i in range(n_max):
@@ -27,30 +27,34 @@ def compute_w_c_r(p, n_max, C, W, R, S, D, node_dict, second_best_dict):
             roots = []
             for r in range(R[i][j-1]-1, R[i+1][j]+1):
                 c = (C[i][r - 1] if r > i else 0) + (C[r + 1][j] if r < j else 0) + S[i][j]
+                comparisons[0] += 3
                 if c < C[i][j]:
                     C[i][j] = c
                     R[i][j] = r + 1
             # get all optimal roots and build root data dictionary (map)
                 roots.append((c, r + 1))
-            optimal_roots, sub_optimal_roots = sort_roots(roots, C[i][j])
+            optimal_roots, sub_optimal_roots = sort_roots(roots, C[i][j], comparisons)
 
             loc, sub_dict = build_dict(i+1, j+1, optimal_roots)
             node_dict[loc] = sub_dict
 
-            loc, sub_dict = build_dict(i+1, j+1, sub_optimal_roots)
-            second_best_dict[loc] = sub_dict
+            loc2, sub_dict2 = build_dict(i+1, j+1, sub_optimal_roots)
+            second_best_dict[loc2] = sub_dict2
 
 
-def build_trees(i, j, trees, my_dict, level, size, total_trees):
+def build_trees(i, j, trees, my_dict, level, size, total_trees, comparisons):
     for key in my_dict[(i, j)]:
         trees.append((level, key["root"]))
         level += 1
         if key["left"] != -1:
-            build_trees(key["left"][0], key["left"][-1], trees, my_dict, level, size, total_trees)
+            build_trees(key["left"][0], key["left"][-1], trees, my_dict, level, size, total_trees, comparisons)
+            comparisons[0] += 1
         if key["right"] != -1:
-            build_trees(key["right"][0], key["right"][-1], trees, my_dict, level, size, total_trees)
+            build_trees(key["right"][0], key["right"][-1], trees, my_dict, level, size, total_trees, comparisons)
+            comparisons[0] += 1
             level -= 1
             if(len(my_dict[(i, j)]) > 1) and (i, j) != (1, size):
+                comparisons[0] += 2
                 my_dict[(i, j)].pop(0)
                 total_trees += 1
 
@@ -91,7 +95,7 @@ def get_std_deviation(all_trees, total_sum, n_max, probabilities):
     return sum_list, [sqrt(val[-1] - (val[0] ** 2)) for val in sum_list]
 
 
-def sort_roots(roots, min_val):
+def sort_roots(roots, min_val, comparisons):
     min_roots = []
     second_root = [(10000000000000000000000, 1)]
     for val in roots:
@@ -99,6 +103,7 @@ def sort_roots(roots, min_val):
             min_roots.append(val[-1])
         else:
             second_root.append(min(second_root.pop(), val))
+        comparisons[0] += 2
     return min_roots, [second_root[0][-1]]
 
 

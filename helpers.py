@@ -13,13 +13,13 @@ def read_file(filename):
                     for char in val:
                         if char in "0123456789":
                             num_str += char
-                    if num_str != '0':
+                    if num_str != '0' and num_str != "":
                         data_list.append(int(num_str))
                     else:
                         master_list.append(data_list)
                         data_list = []
-        master_list.append(data_list)
-        return master_list
+        master_list.extend(data_list)
+        return master_list[0]
 
 
 def organize_trees(trees, n_max):
@@ -66,31 +66,31 @@ def progress(n, n_max):
         print("\t|..100%.|")
 
 
-def print_tree(trees, p, ct):
-    print("Tree:", ct + 1, "-"*71)
+def print_tree(trees, p, ct, output_file):
+    print("\nTree:", ct + 1, "-"*71, file=output_file)
     l1 = [(p[index], level[0], level[-1]) for index, level in enumerate(trees) if level[0] in [1, 2, 3]]
     for index, val in enumerate(l1):
         if index < 1:
-            print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
+            print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="", file=output_file)
         elif index == 1:
-            print("\n -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
+            print("\n -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="", file=output_file)
         elif index < 3:
-            print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")\n"), end="")
+            print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")\n"), end="", file=output_file)
         else:
-            print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="")
+            print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="", file=output_file)
 
 
     print("\n")
 
-def print_table_info(f_name, n_max, avg1, std_dev1, wrst_case1, ct2):
-    print("Tree:", ct2)
+def print_table_info(f_name, n_max, avg1, std_dev1, wrst_case1, ct2, output_file):
+    print("Tree:", ct2, file=output_file)
     args = [f_name, n_max, avg1[0], std_dev1,  wrst_case1, 1]
     headers = ["FILE NAME", "N SIZE", "O(AVG)", "STD_DEV", "O(WORST)", "O(BEST)"]
-    print("-"*88)
-    print("{:<30s} {:<12s} {:<11s} {:<14s} {:<9s} {:<8s}".format(*headers))
-    print("-"*88)
-    print("{:<30s} {:<12d} {:<11.3f} {:<14.10f} {:<9d} {:<8d}".format(*args))
-    print("-"*88)
+    print("-"*88, file=output_file)
+    print("{:<30.30s} {:<12s} {:<11s} {:<14s} {:<9s} {:<8s}".format(*headers), file=output_file)
+    print("-"*88, file=output_file)
+    print("{:<30.30s} {:<12d} {:<11.3f} {:<14.10f} {:<9d} {:<8d}".format(*args), file=output_file)
+    print("-"*88, file=output_file)
     print()
 
 
