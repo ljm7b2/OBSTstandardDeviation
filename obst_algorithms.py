@@ -2,7 +2,8 @@ from helpers import *
 from math import sqrt
 
 
-def compute_w_c_r(p, n_max, C, W, R, S, D, node_dict, second_best_dict, comparisons):
+# computes the weight, cost and root matrices and main node dict
+def compute_w_c_r(p, n_max, C, W, R, S, node_dict, second_best_dict, comparisons):
 
     # construct weight matrix
     for i in range(n_max):
@@ -42,23 +43,25 @@ def compute_w_c_r(p, n_max, C, W, R, S, D, node_dict, second_best_dict, comparis
             second_best_dict[loc2] = sub_dict2
 
 
-def build_trees(i, j, trees, my_dict, level, size, total_trees, comparisons):
-    for key in my_dict[(i, j)]:
+# recursively builds tree blueprints to extract node information
+def build_trees(i, j, trees, node_dict, level, size, total_trees, comparisons):
+    for key in node_dict[(i, j)]:
         trees.append((level, key["root"]))
         level += 1
-        if key["left"] != -1:
-            build_trees(key["left"][0], key["left"][-1], trees, my_dict, level, size, total_trees, comparisons)
+        if key["left"] != -1:  # if NULL
+            build_trees(key["left"][0], key["left"][-1], trees, node_dict, level, size, total_trees, comparisons)
             comparisons[0] += 1
         if key["right"] != -1:
-            build_trees(key["right"][0], key["right"][-1], trees, my_dict, level, size, total_trees, comparisons)
+            build_trees(key["right"][0], key["right"][-1], trees, node_dict, level, size, total_trees, comparisons)
             comparisons[0] += 1
             level -= 1
-            if(len(my_dict[(i, j)]) > 1) and (i, j) != (1, size):
+            if(len(node_dict[(i, j)]) > 1) and (i, j) != (1, size):
                 comparisons[0] += 2
-                my_dict[(i, j)].pop(0)
+                node_dict[(i, j)].pop(0)
                 total_trees += 1
 
 
+# returns the a list of all roots that are associated with lowest cost
 def get_optimal_roots(root, c, i, j):
     return [rt[0] for rt in root if rt[-1] == c[i][j]]
 
@@ -67,6 +70,7 @@ def build_dict(i, j, roots):
     return (i, j), calculate_node(i, j, roots)
 
 
+# builds sub dict with information regarding nodes to be inserted in main dict
 def calculate_node(i, j, roots):
     temp_dict = []
     for root in roots:
@@ -81,6 +85,7 @@ def calculate_node(i, j, roots):
     return temp_dict
 
 
+# computes standard deviation as well average time complexity
 def get_std_deviation(all_trees, total_sum, n_max, probabilities):
     temp_sum1, temp_sum2, sum_list, counter = 0, 0, [], 1
     for t in all_trees:
@@ -95,6 +100,7 @@ def get_std_deviation(all_trees, total_sum, n_max, probabilities):
     return sum_list, [sqrt(val[-1] - (val[0] ** 2)) for val in sum_list]
 
 
+# returns the min roots as well as second best root choice
 def sort_roots(roots, min_val, comparisons):
     min_roots = []
     second_root = [(10000000000000000000000, 1)]

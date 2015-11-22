@@ -1,5 +1,6 @@
 from csv import reader
 
+
 # read and scrub data from file
 # can handle multiple sets of data
 def read_file(filename):
@@ -22,9 +23,9 @@ def read_file(filename):
         return master_list[0]
 
 
+# uses sets to ensure no duplicate trees are generated
 def organize_trees(trees, n_max):
     temp_tree, s1 = [], set()
-
     count1 = -1
     for tr in trees:
         count1 += 1
@@ -33,16 +34,14 @@ def organize_trees(trees, n_max):
             s1.add(tuple(sorted(temp_tree)))
             temp_tree = []
             count1 = -1
-
     trees = [list(tr) for tr in s1]
-
     return trees
 
 
+# provides user progress feedback output
 def progress(n, n_max):
     if n == 2:
         print_progress_header()
-
     div = int(n_max/10)
     if n == div:
         print("\t|..10%..|")
@@ -66,8 +65,9 @@ def progress(n, n_max):
         print("\t|..100%.|")
 
 
+# prints the level-order traversals for each OBST tree generated
 def print_tree(trees, p, ct, output_file):
-    print("\nTree:", ct + 1, "-"*71, file=output_file)
+    print("\nTree:", ct + 1, "-" * 71, file=output_file)
     l1 = [(p[index], level[0], level[-1]) for index, level in enumerate(trees) if level[0] in [1, 2, 3]]
     for index, val in enumerate(l1):
         if index < 1:
@@ -78,10 +78,10 @@ def print_tree(trees, p, ct, output_file):
             print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")\n"), end="", file=output_file)
         else:
             print(" -> {:>7}".format("(L:" + str(val[1]) + ", R:" + str(val[-1]) + ", " + "P:" + str(val[0]) + ")"), end="", file=output_file)
-
-
     print("\n")
 
+
+# prints table information about each OBST tree generated
 def print_table_info(f_name, n_max, avg1, std_dev1, wrst_case1, ct2, output_file):
     print("Tree:", ct2, file=output_file)
     args = [f_name, n_max, avg1[0], std_dev1,  wrst_case1, 1]
@@ -94,6 +94,7 @@ def print_table_info(f_name, n_max, avg1, std_dev1, wrst_case1, ct2, output_file
     print()
 
 
+# prints a progress header
 def print_progress_header():
     print("Computing Optimal Binary Search Tree.....Please Wait")
     print("\t---------")

@@ -1,7 +1,6 @@
 import linecache
 import os
 import tracemalloc
-import pstats
 
 
 def display_top(snapshot, group_by='lineno', limit=10):
