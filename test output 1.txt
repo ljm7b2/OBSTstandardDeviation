@@ -1,0 +1,20 @@
+
+
+
+LEVEL-ORDER TRAVERSAL   (key)->{L: Level, R: Root, P: Probability/Frequency}
+Tree(s): Optimal Tree(s)
+
+
+IMPORTANT TREE INFORMATION
+
+Optimal Tree(s):  0
+
+Total Comparisons: 0
+Total Computation Time: 8.64 seconds
+Total Computation Time: 0.14 minutes
+
+
+
+
+Memory Usage Stats
+

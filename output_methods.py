@@ -1,5 +1,6 @@
 from obst_algorithms import *
 from timeit import default_timer as timer
+from platform_info import *
 
 
 def print_main(output_file, all_trees, n_max, trees2, second_best, total_tree_count, comparisons, total_sum,
@@ -29,30 +30,10 @@ def print_main(output_file, all_trees, n_max, trees2, second_best, total_tree_co
         print("\nSecond Best Tree (Sub-Optimal)", file=output_file)
         print_table_info(file_name, n_max, avgs2[0], std_devs2[0], all_trees2[0][-1][0], 1, output_file)
 
-
-
-    # print("COMPUTING MEMORY DIAGNOSTICS......")
-    # print("Please be patient, this could take some time!")
-
-    #snapshot = tracemalloc.take_snapshot()
-    #display_top(snapshot)
-
-    # OR
-
-    #snapshot = tracemalloc.take_snapshot()
-    #top_stats = snapshot.statistics('lineno')
-
-    # print("[ Top 10 ]")
-    # for stat in top_stats[:5]:
-    #     print(stat)
-
-
-
-    # get_platform_info()
-
     print("\nTotal Comparisons:", comparisons[0], file=output_file)
 
     end = timer()
     print("Total Computation Time: {:4.2f}".format(end - start), "seconds", file=output_file)
     print("Total Computation Time: {:4.2f}".format((end - start) / 60), "minutes", file=output_file)
+    get_platform_info(output_file)
     print("\n\n\n", file=output_file)
