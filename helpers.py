@@ -17,9 +17,11 @@ def read_file(filename):
                     if num_str != '0' and num_str != "":
                         data_list.append(int(num_str))
                     else:
-                        master_list.append(data_list)
+                        if len(data_list) > 0:
+                            master_list.append(data_list)
                         data_list = []
-        master_list.extend(data_list)
+        if len(data_list) > 0:
+            master_list.extend(data_list)
         return master_list
 
 

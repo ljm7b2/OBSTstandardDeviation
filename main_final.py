@@ -3,9 +3,10 @@ from output_methods import *
 from memory_profiling import *
 
 
-file_name = "test.txt"  # <- define your file name here please
+file_name = "CS404FS15ProjectOBSTLargeRandom(1).dat"  # <- define your file name here please
+
 prob = read_file(file_name)
-# prob = [data2()]
+
 
 def main():
     global prob, file_name
