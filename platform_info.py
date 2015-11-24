@@ -1,5 +1,6 @@
 import platform
 
+# method copied from STL, not original work of author
 
 def get_platform_info(output_file):
     print("\nSYSTEM INFORMATION", file=output_file)

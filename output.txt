@@ -40,8 +40,8 @@ CS404FS15ProjectOBSTData2.dat  998          8.836       1.5818546212   12       
 ----------------------------------------------------------------------------------------
 
 Total Comparisons: 7473890
-Total Computation Time: 10.84 seconds
-Total Computation Time: 0.18 minutes
+Total Computation Time: 11.42 seconds
+Total Computation Time: 0.19 minutes
 
 SYSTEM INFORMATION
 system:             Windows
@@ -95,8 +95,8 @@ CS404FS15ProjectOBSTData3.dat  1009         8.795       1.5979110299   13       
 ----------------------------------------------------------------------------------------
 
 Total Comparisons: 7623681
-Total Computation Time: 11.09 seconds
-Total Computation Time: 0.18 minutes
+Total Computation Time: 11.21 seconds
+Total Computation Time: 0.19 minutes
 
 SYSTEM INFORMATION
 system:             Windows
@@ -140,8 +140,8 @@ CS404FS15ProjectOBSTData4.dat  1009         8.941       1.4628509401   11       
 ----------------------------------------------------------------------------------------
 
 Total Comparisons: 7628115
-Total Computation Time: 10.66 seconds
-Total Computation Time: 0.18 minutes
+Total Computation Time: 11.22 seconds
+Total Computation Time: 0.19 minutes
 
 SYSTEM INFORMATION
 system:             Windows
@@ -185,7 +185,7 @@ CS404FS15ProjectOBSTData5.dat  999          8.958       1.4641056692   11       
 ----------------------------------------------------------------------------------------
 
 Total Comparisons: 7488157
-Total Computation Time: 11.12 seconds
+Total Computation Time: 11.16 seconds
 Total Computation Time: 0.19 minutes
 
 SYSTEM INFORMATION
@@ -235,8 +235,58 @@ CS404FS15ProjectOBSTData6.dat  1000         9.115       1.6014734724   12       
 ----------------------------------------------------------------------------------------
 
 Total Comparisons: 7496919
-Total Computation Time: 10.42 seconds
-Total Computation Time: 0.17 minutes
+Total Computation Time: 11.22 seconds
+Total Computation Time: 0.19 minutes
+
+SYSTEM INFORMATION
+system:             Windows
+node:               DESKTOP-U52JN67
+version:            10.0.10586
+processor:          Intel64 Family 6 Model 69 Stepping 1, GenuineIntel
+python compiler:    MSC v.1900 64 bit (AMD64)
+
+
+
+
+
+
+
+LEVEL-ORDER TRAVERSAL   (key)->{L: Level, R: Root, P: Probability/Frequency}
+Tree(s): Optimal Tree(s)
+
+Tree: 1 -----------------------------------------------------------------------
+ -> (L:1, R:490, P:501)
+ -> (L:2, R:218, P:502) -> (L:2, R:718, P:503)
+ -> (L:3, R:128, P:504) -> (L:3, R:362, P:505) -> (L:3, R:618, P:506) -> (L:3, R:873, P:507)
+
+Tree: Second Best (Sub-Optimal Tree)
+
+Tree: 1 -----------------------------------------------------------------------
+ -> (L:1, R:491, P:501)
+ -> (L:2, R:219, P:502) -> (L:2, R:719, P:503)
+ -> (L:3, R:129, P:504) -> (L:3, R:362, P:505) -> (L:3, R:620, P:506) -> (L:3, R:872, P:507)
+
+IMPORTANT TREE INFORMATION
+
+Optimal Tree(s):  1
+Tree: 1
+----------------------------------------------------------------------------------------
+FILE NAME                      N SIZE       O(AVG)      STD_DEV        O(WORST)  O(BEST) 
+----------------------------------------------------------------------------------------
+CS404FS15ProjectOBSTData6.dat  1000         8.949       1.4953513908   11        1       
+----------------------------------------------------------------------------------------
+
+Second Best Tree (Sub-Optimal)
+Tree: 1
+----------------------------------------------------------------------------------------
+FILE NAME                      N SIZE       O(AVG)      STD_DEV        O(WORST)  O(BEST) 
+----------------------------------------------------------------------------------------
+CS404FS15ProjectOBSTData6.dat  1000         9.115       1.6014734724   12        1       
+----------------------------------------------------------------------------------------
+
+Total Comparisons: 7496919
+Total Computation Time: 11.76 seconds
+Total Computation Time: 0.20 minutes
 
 SYSTEM INFORMATION
 system:             Windows

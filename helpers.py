@@ -1,28 +1,34 @@
 from csv import reader
+from time import sleep
 
 
 # read and scrub data from file
 # can handle multiple sets of data
 def read_file(filename):
-    with open(filename, newline='') as file:
-        data_list, master_list = [], []
-        data = reader(file, delimiter=',')
-        for line in data:
-            for val in line:
-                if len(val) > 0:
-                    num_str = ""
-                    for char in val:
-                        if char in "0123456789":
-                            num_str += char
-                    if num_str != '0' and num_str != "":
-                        data_list.append(int(num_str))
-                    else:
-                        if len(data_list) > 0:
-                            master_list.append(data_list)
-                        data_list = []
-        if len(data_list) > 0:
-            master_list.extend(data_list)
-        return master_list
+    try:
+        with open(filename, newline='') as file:
+            data_list, master_list = [], []
+            data = reader(file, delimiter=',')
+            for line in data:
+                for val in line:
+                    if len(val) > 0:
+                        num_str = ""
+                        for char in val:
+                            if char in "0123456789":
+                                num_str += char
+                        if num_str != '0' and num_str != "":
+                            data_list.append(int(num_str))
+                        else:
+                            if len(data_list) > 0:
+                                master_list.append(data_list)
+                            data_list = []
+            if len(data_list) > 0:
+                master_list.extend(data_list)
+    except FileNotFoundError:
+        print("File Not Found. Is Name correct and right directory?")
+        sleep(5)
+
+    return master_list
 
 
 # uses sets to ensure no duplicate trees are generated
@@ -93,7 +99,7 @@ def print_table_info(f_name, n_max, avg1, std_dev1, wrst_case1, ct2, output_file
     print("-"*88, file=output_file)
     print("{:<30.30s} {:<12d} {:<11.3f} {:<14.10f} {:<9d} {:<8d}".format(*args), file=output_file)
     print("-"*88, file=output_file)
-    print()
+
 
 
 # prints a progress header

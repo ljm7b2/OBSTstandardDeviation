@@ -3,6 +3,8 @@ import os
 import tracemalloc
 
 
+# method copied from STL, not original work from author
+
 def display_top(snapshot, group_by='lineno', limit=10):
     snapshot = snapshot.filter_traces((
         tracemalloc.Filter(False, "<frozen importlib._bootstrap>"),

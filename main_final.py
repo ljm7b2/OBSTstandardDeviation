@@ -1,9 +1,8 @@
-from data_file import *
 from output_methods import *
 from memory_profiling import *
 
 
-file_name = "CS404FS15ProjectOBSTData2.dat"  # <- define your file name here please
+file_name = "CS404FS15ProjectOBSTData6.dat"  # <- define your file name here please, include extension
 
 prob = read_file(file_name)
 
@@ -23,7 +22,7 @@ def main():
         node_dict, count, trees, recheck, ct = {}, 0, [], [1], 0
         second_best, trees2 = {}, []
         comparisons = [0]
-        # tracemalloc.start()
+        # tracemalloc.start()  #  <- memory profiling (TAKES FOREVER!, uncomment two lines at bottom too)
         start = timer()
         total_tree_count = 0
         output_f = "output.txt"
@@ -48,8 +47,11 @@ def main():
 
         output_file.close()
 
-        # snapshot = tracemalloc.take_snapshot()
+        # snapshot = tracemalloc.take_snapshot()  # <- memory profiling and line below
         # display_top(snapshot)
 
 
 main()
+
+print("Complete, Your output is ready in file: output.txt")
+print("NOTE: This file is set to 'APPEND', multiples sets will be appended.")
